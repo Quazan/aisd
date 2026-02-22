@@ -99,6 +99,7 @@ def _merge(array: list[int], left: int, mid: int, right: int) -> None:
     # TODO: Twoja implementacja
     pass
 
+
 def _merge_sort(array: list[int], left: int, right: int) -> None:
     """
     Sortowanie przez scalanie (Merge Sort).
@@ -126,18 +127,19 @@ def merge_sort(array: list[int]) -> None:
     """
     _merge_sort(array, 0, len(array) - 1)
 
+
 def _partition(array: list[int], low: int, high: int) -> int:
     """
-    Schemat Lomuto – wyznacza indeks pivota po podziale.
+    Pomocnicza funkcja dzieląca listę na dwie części względem pivota.
+    Funkcja przestawia elementy tak, że po lewej stronie pivota znajdują się elementy mniejsze lub równe, a po prawej – większe.
+    Zwraca ostateczną pozycję pivota.
 
-    Pivot to ostatni element podciągu (array[high]).
-    i to granica „strefy elementów <= pivot".
-    Dla każdego j od low do high-1: jeśli array[j] <= pivot,
-    poszerzamy strefę (i++) i zamieniamy array[i] z array[j].
-    Na końcu wstawiamy pivot na pozycję i+1.
+    Funkcję można zaimplementować na wiele sposobów (np. Lomuto, Hoare). Wybór metody wpływa na stabilność i wydajność.
+    Lamuto: https://www.geeksforgeeks.org/dsa/lomuto-partition-algorithm/
+    Hoare: https://www.geeksforgeeks.org/dsa/hoare-s-partition-algorithm/
     """
     # TODO: Twoja implementacja
-    return low
+    pass
 
 
 def _quick_sort(array: list[int], low: int, high: int) -> None:
