@@ -84,7 +84,22 @@ def insertion_sort(array: list[int]) -> None:
     pass
 
 
-def merge_sort(array: list[int], left: int, right: int) -> None:
+def _merge(array: list[int], left: int, mid: int, right: int) -> None:
+    """
+    Pomocnicza funkcja scalająca dwa posortowane podciągi array[left..mid]
+    i array[mid+1..right] w jeden posortowany ciąg.
+
+    Intuicja: Tworzymy tymczasową listę, do której kopiujemy elementy z obu
+    podciągów, porównując je i wybierając mniejszy. Po scaleniu kopiujemy
+    wynik z powrotem do oryginalnej listy.
+
+    Złożoność czasowa: O(n) – gdzie n to liczba elementów w obu podciągach.
+    Złożoność pamięciowa: O(n) – wymaga dodatkowej listy pomocniczej.
+    """
+    # TODO: Twoja implementacja
+    pass
+
+def _merge_sort(array: list[int], left: int, right: int) -> None:
     """
     Sortowanie przez scalanie (Merge Sort).
 
@@ -104,6 +119,13 @@ def merge_sort(array: list[int], left: int, right: int) -> None:
     pass
 
 
+def merge_sort(array: list[int]) -> None:
+    """
+    Interfejsowa funkcja sortowania przez scalanie (Merge Sort).
+    Wywołuje funkcję _merge_sort z odpowiednimi parametrami początkowymi
+    """
+    _merge_sort(array, 0, len(array) - 1)
+
 def _partition(array: list[int], low: int, high: int) -> int:
     """
     Schemat Lomuto – wyznacza indeks pivota po podziale.
@@ -118,7 +140,7 @@ def _partition(array: list[int], low: int, high: int) -> int:
     return low
 
 
-def quick_sort(array: list[int], low: int, high: int) -> None:
+def _quick_sort(array: list[int], low: int, high: int) -> None:
     """
     Sortowanie szybkie (Quick Sort).
 
@@ -134,6 +156,13 @@ def quick_sort(array: list[int], low: int, high: int) -> None:
     """
     # TODO: Twoja implementacja
     pass
+
+def quick_sort(array: list[int]) -> None:
+    """
+    Interfejsowa funkcja sortowania szybkiego (Quick Sort).
+    Wywołuje funkcję _quick_sort z odpowiednimi parametrami początkowymi
+    """
+    _quick_sort(array, 0, len(array) - 1)
 
 
 # =============================================================================
