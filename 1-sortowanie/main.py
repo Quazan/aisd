@@ -135,7 +135,7 @@ def _partition(array: list[int], low: int, high: int) -> int:
     Zwraca ostateczną pozycję pivota.
 
     Funkcję można zaimplementować na wiele sposobów (np. Lomuto, Hoare). Wybór metody wpływa na stabilność i wydajność.
-    Lamuto: https://www.geeksforgeeks.org/dsa/lomuto-partition-algorithm/
+    Lomuto: https://www.geeksforgeeks.org/dsa/lomuto-partition-algorithm/
     Hoare: https://www.geeksforgeeks.org/dsa/hoare-s-partition-algorithm/
     """
     # TODO: Twoja implementacja
