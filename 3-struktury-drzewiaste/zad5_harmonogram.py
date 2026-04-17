@@ -51,12 +51,9 @@ def utworz_harmonogram(zadania: list[Zadanie]) -> list[Zadanie]:
     Złożoność czasowa:  O(n) – szybciej niż sortowanie O(n log n)!
     Złożoność pamięciowa: O(1) – modyfikacja in-place
     """
-    # TODO:
-    #   1. Wywołaj heapq.heapify(zadania) – przekształca listę in-place.
-    #   2. Wypisz komunikat, np.:
-    #      f"Harmonogram gotowy. Liczba zadań: {len(zadania)}"
-    #      f"Najbliższy deadline: {zadania[0][1]} (za {zadania[0][0]} dni)"
-    #   3. Zwróć `zadania`.
+    # TODO: Przekształć listę w kopiec in-place używając heapq.heapify().
+    #       Wypisz informację o liczbie zadań i najbliższym deadline'ie.
+    #       Zwróć harmonogram.
     pass
 
 
@@ -74,15 +71,8 @@ def najpilniejsze(harmonogram: list[Zadanie], n: int) -> list[Zadanie]:
     Złożoność czasowa:  O(n log k), gdzie k = n (żądana liczba wyników)
     Złożoność pamięciowa: O(k) – tylko k elementów w wyniku
     """
-    # TODO:
-    #   1. Użyj heapq.nsmallest(n, harmonogram), aby pobrać n elementów
-    #      z najmniejszą wartością pierwszego pola krotki (dni_do_deadline).
-    #   2. Zapisz wynik do zmiennej, np.: pilne = heapq.nsmallest(n, harmonogram)
-    #   3. Wypisz nagłówek: f"--- Top {n} najpilniejszych zadań ---"
-    #   4. Iteruj po wyniku i wypisuj:
-    #      f"  [{dni}d] {nazwa} ({priorytet})"
-    #      (rozpakuj krotkę: dni, nazwa, priorytet = zadanie)
-    #   5. Zwróć listę wynikową.
+    # TODO: Użyj heapq.nsmallest(), aby pobrać n zadań z najbliższym deadline'em.
+    #       Wypisz je w czytelny sposób i zwróć listę.
     pass
 
 
@@ -100,12 +90,9 @@ def najluzniejsze(harmonogram: list[Zadanie], n: int) -> list[Zadanie]:
     Złożoność czasowa:  O(n log k)
     Złożoność pamięciowa: O(k)
     """
-    # TODO:
-    #   1. Użyj heapq.nlargest(n, harmonogram), aby pobrać n zadań
-    #      z największą wartością pierwszego pola (dni_do_deadline).
-    #   2. Zapisz wynik i wypisz nagłówek: f"--- Top {n} zadań z zapasem czasu ---"
-    #   3. Iteruj i wypisuj (tak samo jak w `najpilniejsze`).
-    #   4. Zwróć listę wynikową.
+    # TODO: Analogicznie do najpilniejsze() — użyj heapq.nlargest(),
+    #       aby znaleźć zadania z największym zapasem czasu.
+    #       Wypisz je i zwróć listę.
     pass
 
 
@@ -123,10 +110,9 @@ def dodaj_zadanie(harmonogram: list[Zadanie], dni: int, nazwa: str, priorytet_bi
     Złożoność czasowa:  O(log n)
     Złożoność pamięciowa: O(1)
     """
-    # TODO:
-    #   1. Utwórz krotkę: zadanie = (dni, nazwa, priorytet_biz)
-    #   2. Wywołaj heapq.heappush(harmonogram, zadanie).
-    #   3. Wypisz: f"[+] Dodano: {nazwa} (deadline za {dni} dni, {priorytet_biz})"
+    # TODO: Dodaj nowe zadanie do kopca tak, żeby nie zniszczyć jego własności.
+    #       Zwykłe list.append() nie wystarczy — użyj odpowiedniej funkcji heapq.
+    #       Wypisz potwierdzenie dodania.
     pass
 
 

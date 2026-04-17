@@ -114,12 +114,10 @@ def scalaj_logi(*strumienie: list[LogEntry]) -> list[LogEntry]:
     Złożoność czasowa:  O(n log K), gdzie n = łączna liczba logów, K = serwerów
     Złożoność pamięciowa: O(K) – tylko K wskaźników w kopcu
     """
-    # TODO:
-    #   1. Wywołaj heapq.merge(*strumienie), aby scalić wszystkie listy.
-    #      Wynik to generator – zmaterializuj go: list(heapq.merge(*strumienie))
-    #   2. Zapisz wynik do zmiennej `scalone`.
-    #   3. Wypisz: f"Scalono {len(strumienie)} strumieni → {len(scalone)} wpisów łącznie."
-    #   4. Zwróć `scalone`.
+    # TODO: Scal wszystkie strumienie w jeden posortowany chronologicznie strumień
+    #       używając heapq.merge(). Pamiętaj, że wynik to generator —
+    #       musisz go zmaterializować do listy.
+    #       Wypisz ile strumieni i łącznie ile wpisów scalono. Zwróć listę.
     pass
 
 
@@ -137,12 +135,8 @@ def filtruj_bledy(logi: list[LogEntry], poziom: str) -> list[LogEntry]:
     Złożoność czasowa:  O(n)
     Złożoność pamięciowa: O(k), gdzie k = liczba pasujących wpisów
     """
-    # TODO:
-    #   1. Użyj list comprehension, aby przefiltrować `logi`:
-    #      [log for log in logi if log.poziom == poziom]
-    #   2. Zapisz wynik do `przefiltrowane`.
-    #   3. Wypisz: f"Znaleziono {len(przefiltrowane)} wpisów na poziomie {poziom}."
-    #   4. Zwróć `przefiltrowane`.
+    # TODO: Zwróć tylko wpisy pasujące do podanego poziomu.
+    #       Wypisz ile wpisów znaleziono i zwróć listę.
     pass
 
 
@@ -160,13 +154,8 @@ def najnowsze_logi(logi: list[LogEntry], n: int) -> list[LogEntry]:
     Złożoność czasowa:  O(n log k), gdzie k = n (żądana liczba wyników)
     Złożoność pamięciowa: O(k)
     """
-    # TODO:
-    #   1. Wywołaj heapq.nlargest(n, logi, key=lambda log: log.timestamp)
-    #   2. Zapisz wynik do `najnowsze`.
-    #   3. Wypisz nagłówek: f"--- {n} najnowszych wpisów ---"
-    #   4. Iteruj i wypisuj każdy log (każdy LogEntry ma zdefiniowany __str__,
-    #      więc wystarczy: print(f"  {log}")
-    #   5. Zwróć `najnowsze`.
+    # TODO: Użyj heapq.nlargest() z kluczem sortowania po polu timestamp,
+    #       aby pobrać n najnowszych wpisów. Wypisz je i zwróć listę.
     pass
 
 

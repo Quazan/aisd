@@ -55,10 +55,8 @@ def dodaj_zgloszenie(kolejka: list, priorytet: int, id_zgloszenia: int, opis: st
     Złożoność czasowa:  O(log n) – kopiec "przesiewa" nowy element w górę
     Złożoność pamięciowa: O(1) – nie tworzymy nowych struktur
     """
-    # TODO: Użyj heapq.heappush(), aby dodać krotkę (priorytet, id_zgloszenia, opis)
-    #       do listy `kolejka`.
-    #       1. Wywołaj: heapq.heappush(kolejka, (priorytet, id_zgloszenia, opis))
-    #       2. Wypisz potwierdzenie, np.: f"[+] Dodano (P{priorytet}): {opis}"
+    # TODO: Dodaj zgłoszenie jako krotkę do kopca używając heapq.heappush().
+    #       Wypisz potwierdzenie dodania.
     pass
 
 
@@ -76,13 +74,9 @@ def obsluz_zgloszenie(kolejka: list) -> Zgloszenie | None:
     Złożoność czasowa:  O(log n) – "przesiewanie" w dół po usunięciu szczytu
     Złożoność pamięciowa: O(1)
     """
-    # TODO:
-    #   1. Sprawdź, czy kolejka nie jest pusta (użyj `not kolejka` lub `len(kolejka) == 0`).
-    #      Jeśli pusta – wypisz "Brak zgłoszeń do obsłużenia." i zwróć None.
-    #   2. Użyj heapq.heappop(kolejka), aby pobrać zgłoszenie (dostaniesz krotkę).
-    #   3. Rozpakuj krotkę: priorytet, id_zgl, opis = heapq.heappop(kolejka)
-    #   4. Wypisz komunikat, np.: f"[✓] Obsługuję (P{priorytet}): {opis}"
-    #   5. Zwróć krotkę (priorytet, id_zgl, opis).
+    # TODO: Obsłuż przypadek pustej kolejki – zwróć None z komunikatem.
+    #       Pobierz najważniejsze zgłoszenie z kopca za pomocą heapq.heappop(),
+    #       wypisz komunikat o obsłużeniu i zwróć krotkę.
     pass
 
 
@@ -99,14 +93,10 @@ def wyswietl_kolejke(kolejka: list) -> None:
     Złożoność czasowa:  O(n log n) – sortowanie kopii
     Złożoność pamięciowa: O(n) – tworzymy kopię listy
     """
-    # TODO:
-    #   1. Jeśli kolejka jest pusta, wypisz "Kolejka jest pusta." i zakończ.
-    #   2. Utwórz posortowaną kopię: posortowane = sorted(kolejka)
-    #      (sorted() nie niszczy oryginalnego kopca)
-    #   3. Wypisz nagłówek, np.: "--- Stan kolejki zgłoszeń ---"
-    #   4. Iteruj po `posortowane` i wypisuj każde zgłoszenie w formacie:
-    #      f"  P{priorytet} | #{id_zgl:03d} | {opis}"
-    #      (rozpakuj krotkę: priorytet, id_zgl, opis = zgloszenie)
+    # TODO: Obsłuż przypadek pustej kolejki.
+    #       Pamiętaj – lista kopca nie jest posortowana wizualnie, więc do
+    #       wyświetlenia w kolejności priorytetu potrzebujesz posortowanej kopii
+    #       (nie niszcz oryginalnego kopca!). Wypisz wszystkie zgłoszenia.
     pass
 
 
