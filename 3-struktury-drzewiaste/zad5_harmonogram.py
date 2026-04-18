@@ -77,22 +77,25 @@ def najpilniejsze(harmonogram: list[Zadanie], n: int) -> list[Zadanie]:
 
 
 # ============================================================
-# FUNKCJA 3 – Znajdź N zadań z największym zapasem
+# FUNKCJA 3 – Usuń N najpilniejszych zadań z harmonogramu
 # ============================================================
-def najluzniejsze(harmonogram: list[Zadanie], n: int) -> list[Zadanie]:
+def usun_najpilniejsze(harmonogram: list[Zadanie], n: int) -> list[Zadanie]:
     """
-    Zwraca listę n zadań z NAJWIĘKSZĄ liczbą dni do deadline'u.
-    Przydatne gdy szukamy zadań do "odkładania na później".
+    Usuwa i zwraca n zadań z NAJBLIŻSZYM deadline'em z harmonogramu.
+    Używane np. na początku sprintu: "bierzemy 3 najpilniejsze, reszta czeka".
 
-    Intuicja: nlargest() to odwrotność nsmallest() – wyciąga maksima.
-    Używamy jej, gdy interesuje nas "ogon" rozkładu, nie szczyt.
+    Intuicja: heappop() zawsze oddaje minimum kopca, więc wywołując go n razy
+    dostajemy n najpilniejszych zadań w kolejności — i jednocześnie usuwamy je
+    z harmonogramu. To różni tę funkcję od najpilniejsze(): tamta tylko czytała,
+    ta MODYFIKUJE kopiec.
 
-    Złożoność czasowa:  O(n log k)
-    Złożoność pamięciowa: O(k)
+    Złożoność czasowa:  O(n log m), gdzie m = rozmiar harmonogramu
+    Złożoność pamięciowa: O(n) – lista usuniętych zadań
     """
-    # TODO: Analogicznie do najpilniejsze() — użyj heapq.nlargest(),
-    #       aby znaleźć zadania z największym zapasem czasu.
-    #       Wypisz je i zwróć listę.
+    # TODO: W pętli n razy pobierz i usuń najważniejszy element z kopca
+    #       używając heapq.heappop(). Zbieraj usunięte zadania na liście.
+    #       Obsłuż przypadek gdy harmonogram ma mniej niż n zadań.
+    #       Wypisz każde usunięte zadanie i zwróć listę usuniętych.
     pass
 
 
@@ -139,7 +142,7 @@ def _wyswietl_wszystkie(harmonogram: list[Zadanie]) -> None:
 # Demonstracja działania – uruchom plik, aby sprawdzić swoje rozwiązanie
 # =============================================================================
 if __name__ == "__main__":
-    print("=== Harmonogram Sprintu – heapify / nsmallest / nlargest ===\n")
+    print("=== Harmonogram Sprintu – heapify / nsmallest / heappop ===\n")
 
     # Backlog zadań: (dni_do_deadline, nazwa, priorytet_biznesowy)
     backlog: list[Zadanie] = [
@@ -165,9 +168,12 @@ if __name__ == "__main__":
     _separator("Top 3 najpilniejsze zadania (stand-up)")
     najpilniejsze(harmonogram, 3)
 
-    # --- Krok 4: Co możemy odłożyć? ---
-    _separator("Top 3 zadania z największym zapasem")
-    najluzniejsze(harmonogram, 3)
+    # --- Krok 4: Sprint startuje — bierzemy 3 najpilniejsze do realizacji ---
+    _separator("Start sprintu – bierzemy 3 najpilniejsze zadania")
+    usuniete = usun_najpilniejsze(harmonogram, 3)
+
+    _separator("Harmonogram po zabraniu 3 zadań do sprintu")
+    _wyswietl_wszystkie(harmonogram)
 
     # --- Krok 5: Nowe zgłoszenie z zewnątrz ---
     _separator("Nowe zadanie wpada w trakcie sprintu")

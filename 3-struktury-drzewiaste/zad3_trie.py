@@ -138,14 +138,14 @@ class Trie:
         Pomocnicza metoda do podpowiedzi() — rekurencyjnie odwiedza wszystkie
         węzły w poddrzewie i zbiera kompletne słowa do listy `wyniki`.
 
-        Nie musisz jej wywoływać bezpośrednio — używa jej podpowiedzi().
+        Dostarczona – nie musisz jej zmieniać. Wywołuje ją podpowiedzi().
 
         Złożoność: O(n), gdzie n = liczba węzłów w poddrzewie
         """
-        # TODO: Jeśli bieżący węzeł jest końcem słowa, dodaj `prefiks` do `wyniki`.
-        #       Następnie dla każdej litery w node.dzieci wywołaj rekurencyjnie
-        #       _zbierz_slowa() z rozszerzonym prefiksem (prefiks + litera).
-        pass
+        if node.czy_koniec:
+            wyniki.append(prefiks)
+        for litera, dziecko in node.dzieci.items():
+            self._zbierz_slowa(dziecko, prefiks + litera, wyniki)
 
 
 # =============================================================================

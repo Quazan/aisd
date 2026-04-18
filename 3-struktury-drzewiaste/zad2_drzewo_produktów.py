@@ -1,5 +1,5 @@
 # =============================================================================
-# Zadanie 1 – Drzewo Binarne Poszukiwań (Binary Search Tree - BST)
+# Zadanie 2 – Drzewo Binarne Poszukiwań (Binary Search Tree - BST)
 # =============================================================================
 # OPIS PROBLEMU:
 #   Budujesz system wyszukiwania produktów po ich numerze ID.

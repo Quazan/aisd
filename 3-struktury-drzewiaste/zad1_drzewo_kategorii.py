@@ -1,5 +1,5 @@
 # =============================================================================
-# Zadanie 2 – Drzewo (Tree) – hierarchiczna struktura kategorii
+# Zadanie 1 – Drzewo (Tree) – hierarchiczna struktura kategorii
 # =============================================================================
 # OPIS PROBLEMU:
 #   Pracujesz jako programista w firmie prowadzącej sklep internetowy.
