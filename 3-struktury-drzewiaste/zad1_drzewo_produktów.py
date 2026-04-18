@@ -33,14 +33,16 @@ def wstaw(korzen: ProduktNode, nowy_wezel: ProduktNode) -> ProduktNode:
     """
     Wstawia nowy_wezel do drzewa BST zgodnie z zasadą:
     mniejsze ID na lewo, większe ID na prawo.
+
+    Jeśli produkt o takim samym ID już istnieje w drzewie,
+    jest ignorowany — nie dodajemy duplikatów.
     """
     if korzen is None:
         return nowy_wezel
 
-    # TODO: Porównaj id nowego węzła z id korzenia:
-    #   1. Jeśli nowy.id < korzen.id -> idź do lewego poddrzewa (rekurencja).
-    #   2. Jeśli nowy.id > korzen.id -> idź do prawego poddrzewa.
-    # Wskazówka: korzen.lewo = wstaw(korzen.lewo, nowy_wezel)
+    # TODO: Porównaj ID nowego węzła z ID korzenia i rekurencyjnie wstaw go
+    #       do odpowiedniego poddrzewa (lewego lub prawego).
+    #       Obsłuż też przypadek duplikatu — węzeł z tym samym ID ignorujemy.
     pass
     return korzen
 
@@ -53,11 +55,8 @@ def szukaj(korzen: ProduktNode, szukane_id: int) -> str:
     Przeszukuje drzewo w poszukiwaniu produktu o danym ID.
     Zwraca nazwę produktu lub informację o braku.
     """
-    # TODO:
-    #   1. Jeśli korzen jest None -> zwróć "Nie znaleziono".
-    #   2. Jeśli szukane_id == korzen.id -> zwróć korzen.nazwa.
-    #   3. Jeśli szukane_id < korzen.id -> szukaj w lewym poddrzewie.
-    #   4. W przeciwnym razie -> szukaj w prawym poddrzewie.
+    # TODO: Rekurencyjnie przeszukuj drzewo — porównuj szukane ID z bieżącym węzłem
+    #       i decyduj, w którą stronę iść. Obsłuż przypadek nieznalezienia produktu.
     pass
 
 
@@ -69,10 +68,8 @@ def wyswietl_katalog(korzen: ProduktNode):
     Wypisuje katalog produktów posortowany po ID (rosnąco).
     """
     if korzen:
-        # TODO: Zastosuj rekurencję In-order:
-        #   1. Odwiedź lewe poddrzewo.
-        #   2. Wypisz aktualny węzeł: print(f"[{korzen.id}] {korzen.nazwa}")
-        #   3. Odwiedź prawe poddrzewo.
+        # TODO: Zastosuj obchód in-order (lewo → węzeł → prawo),
+        #       żeby wypisać produkty posortowane rosnąco po ID.
         pass
 
 
@@ -104,3 +101,8 @@ if __name__ == "__main__":
     print("\n-- Wyszukiwanie produktów --")
     print(f"Szukam ID 30: {szukaj(katalog, 30)}")
     print(f"Szukam ID 99: {szukaj(katalog, 99)}")
+
+    print("\n-- Test duplikatu --")
+    wstaw(katalog, ProduktNode(30, "DUPLIKAT Słuchawek"))
+    print(f"Szukam ID 30 po próbie wstawienia duplikatu: {szukaj(katalog, 30)}")
+    # Powinno nadal zwrócić "Słuchawki ANC", nie "DUPLIKAT Słuchawek"

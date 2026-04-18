@@ -51,8 +51,7 @@ class KategoriaNode:
     dzieci: list["KategoriaNode"]
 
     def __init__(self, nazwa: str) -> None:
-        # TODO: 1. Przypisz parametr `nazwa` do atrybutu self.nazwa.
-        #       2. Zainicjalizuj self.dzieci jako pustą listę [].
+        # TODO: Zainicjalizuj atrybuty węzła — nazwę kategorii i pustą listę dzieci.
         pass
 
     def dodaj_podkategorie(self, podkategoria: "KategoriaNode") -> None:
@@ -64,8 +63,7 @@ class KategoriaNode:
             laptopy     = KategoriaNode("Laptopy")
             elektronika.dodaj_podkategorie(laptopy)
         """
-        # TODO: Dodaj obiekt `podkategoria` do listy self.dzieci
-        #       za pomocą metody .append().
+        # TODO: Dodaj podkategorię do listy dzieci bieżącego węzła.
         pass
 
     def __repr__(self) -> str:
@@ -95,18 +93,13 @@ def wyswietl_drzewo(node: KategoriaNode, poziom: int = 0) -> None:
         node   – bieżący węzeł do wypisania
         poziom – głębokość węzła w drzewie (korzeń = 0)
     """
-    # TODO: 1. Oblicz wcięcie: wciecie = " " * (poziom * 2)
-    #       2. Wypisz wcięcie i nazwę bieżącego węzła:
-    #          print(f"{wciecie}{node.nazwa}")
-    #       3. Dla każdego dziecka w node.dzieci wywołaj rekurencyjnie
-    #          wyswietl_drzewo(dziecko, poziom + 1)
+    # TODO: Wypisz nazwę bieżącego węzła z wcięciem proporcjonalnym do jego głębokości,
+    #       a następnie rekurencyjnie wyświetl każde dziecko (o jeden poziom głębiej).
     pass
 
 
-
-
 # =============================================================================
-# FUNKCJA 3 – Policz wszystkie węzły w drzewie (rekurencja)
+# FUNKCJA 2 – Policz wszystkie węzły w drzewie (rekurencja)
 # =============================================================================
 def policz_wszystkie(node: KategoriaNode) -> int:
     """
@@ -119,10 +112,8 @@ def policz_wszystkie(node: KategoriaNode) -> int:
     Zwraca:
         int – całkowita liczba węzłów
     """
-    # TODO: 1. Zacznij od licznika = 1 (bieżący węzeł).
-    #       2. Dla każdego dziecka w node.dzieci dodaj do licznika
-    #          wynik rekurencyjnego wywołania policz_wszystkie(dziecko).
-    #       3. Zwróć licznik.
+    # TODO: Policz bieżący węzeł i rekurencyjnie dodaj liczbę węzłów
+    #       ze wszystkich poddrzew dzieci. Zwróć sumę.
     pass
 
 
@@ -181,7 +172,7 @@ if __name__ == "__main__":
 
     # --- Test 2: Zliczanie węzłów --------------------------------------------
     print("\n" + "=" * 50)
-    print("Test 3 – Liczba kategorii w drzewie:")
+    print("Test 2 – Liczba kategorii w drzewie:")
     print("=" * 50)
     liczba = policz_wszystkie(sklep)
     print(f"Łączna liczba kategorii (węzłów): {liczba}")

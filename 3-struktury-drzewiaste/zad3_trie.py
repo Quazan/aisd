@@ -3,68 +3,209 @@
 # =============================================================================
 # OPIS PROBLEMU:
 #   Implementujesz mechanizm podpowiedzi (autocomplete) dla wyszukiwarki
-#   produktów. Zwykłe przeszukiwanie listy słów po każdym naciśnięciu klawisza
-#   jest zbyt wolne. Drzewo Trie pozwala błyskawicznie sprawdzić, jakie słowa
-#   zaczynają się od danego prefiksu.
+#   produktów w sklepie internetowym.
+#   Gdy użytkownik wpisuje "la", system powinien błyskawicznie podpowiedzieć:
+#   "laptop", "lampa", "lato".
+#
+#   Zwykłe przeszukiwanie listy słów po każdym naciśnięciu klawisza kosztuje
+#   O(n * m) – za wolne przy dużym katalogu. Drzewo Trie pozwala znaleźć
+#   wszystkie słowa zaczynające się od prefiksu w O(m + k), gdzie m = długość
+#   prefiksu, k = liczba wyników.
+#
+#   Jak działa Trie?
+#     Każda litera słowa to osobny węzeł. Słowa "la", "laptop", "lampa"
+#     współdzielą węzły dla "l" i "a":
+#
+#       (root)
+#         └── l
+#               └── a  [koniec: "la"]
+#                     ├── p
+#                     │     └── t
+#                     │           └── o
+#                     │                 └── p  [koniec: "laptop"]
+#                     └── m
+#                           └── p
+#                                 └── a  [koniec: "lampa"]
 #
 #   Twoim zadaniem jest:
 #     1. Implementacja wstawiania słowa do drzewa Trie.
 #     2. Sprawdzenie, czy dane słowo istnieje w słowniku.
-#     3. (Dla ambitnych) Znalezienie wszystkich słów zaczynających się od prefiksu.
+#     3. Znalezienie wszystkich słów zaczynających się od podanego prefiksu.
 #
 # METODY / OPERACJE do poznania:
-#   - Dzieci węzła:   Słownik {znak: Node} – kluczem jest litera, wartością kolejny węzeł.
-#   - Is_end_of_word: Flaga (boolean) oznaczająca, że w tym miejscu kończy się słowo.
+#   - Dzieci węzła:        node.dzieci           – słownik {litera: TrieNode}
+#   - Sprawdzenie litery:  litera in node.dzieci  – O(1), jak klucz w dict
+#   - Dodanie litery:      node.dzieci[litera] = TrieNode()
+#   - Przejście do litery: node = node.dzieci[litera]
+#   - Koniec słowa:        node.czy_koniec = True  – flaga na ostatniej literze
+#   - Zbieranie wyników:   rekurencja DFS z budowaniem prefiksu
 # =============================================================================
 
+
+# =============================================================================
+# MODEL DANYCH (dostarczony – nie musisz zmieniać)
+# =============================================================================
 class TrieNode:
+    """Pojedynczy węzeł drzewa Trie — reprezentuje jedną literę."""
+
     def __init__(self):
-        # Słownik przechowujący dzieci: {'l': Node, 'a': Node, ...}
-        self.dzieci = {}
-        # Czy dany węzeł jest ostatnią literą jakiegoś słowa
-        self.czy_koniec = False
+        # Słownik dzieci: {'l': TrieNode, 'a': TrieNode, ...}
+        self.dzieci: dict[str, TrieNode] = {}
+        # Czy w tym miejscu kończy się jakieś słowo ze słownika
+        self.czy_koniec: bool = False
+
 
 class Trie:
+    """
+    Drzewo Trie (Prefix Tree) — struktura do przechowywania i wyszukiwania słów
+    po prefiksie. Idealna do autouzupełniania, sprawdzania pisowni i słowników.
+
+    Wszystkie operacje zaczynają się od korzenia (self.root), który jest pustym
+    węzłem — nie reprezentuje żadnej litery.
+    """
+
     def __init__(self):
         self.root = TrieNode()
 
     # ============================================================
     # FUNKCJA 1 – Dodawanie słowa
     # ============================================================
-    def wstaw(self, slowo: str):
-        """Wstawia słowo do drzewa litera po literze."""
-        aktualny = self.root
-        for litera in slowo:
-            # TODO:
-            # 1. Jeśli litery nie ma w aktualny.dzieci -> dodaj nowy TrieNode().
-            # 2. Przejdź do tego węzła (aktualny = aktualny.dzieci[litera]).
-            pass
-        # 3. Na samym końcu ustaw aktualny.czy_koniec = True
+    def wstaw(self, slowo: str) -> None:
+        """
+        Wstawia słowo do drzewa Trie litera po literze.
+
+        Intuicja: idziemy od korzenia w dół — dla każdej litery sprawdzamy,
+        czy węzeł już istnieje. Jeśli nie, tworzymy go. Na końcu oznaczamy
+        węzeł ostatniej litery jako koniec słowa.
+
+        Złożoność czasowa:  O(m), gdzie m = długość słowa
+        Złożoność pamięciowa: O(m) w najgorszym razie (zupełnie nowe słowo)
+        """
+        # TODO: Iteruj po literach słowa. Dla każdej litery sprawdź, czy istnieje
+        #       odpowiedni węzeł — jeśli nie, utwórz go. Przejdź do węzła tej litery.
+        #       Po przetworzeniu wszystkich liter oznacz bieżący węzeł jako koniec słowa.
         pass
 
     # ============================================================
-    # FUNKCJA 2 – Wyszukiwanie całego słowa
+    # FUNKCJA 2 – Wyszukiwanie słowa
     # ============================================================
     def szukaj(self, slowo: str) -> bool:
-        """Zwraca True, jeśli słowo znajduje się w Trie."""
-        aktualny = self.root
-        for litera in slowo:
-            # TODO: Jeśli litery nie ma w dzieciach -> zwróć False.
-            pass
-        # Zwróć wartość aktualny.czy_koniec
-        return False
+        """
+        Sprawdza, czy podane słowo w całości istnieje w słowniku.
+        Zwraca True tylko wtedy, gdy słowo zostało wcześniej wstawione przez wstaw().
+
+        Intuicja: schodzimy po literach — jeśli którejś litery brakuje w węźle,
+        słowa nie ma. Dotarcie do końca liter nie wystarczy: trzeba sprawdzić,
+        czy ostatni węzeł był oznaczony jako koniec słowa (odróżnia "la" od "laptop").
+
+        Złożoność czasowa:  O(m), gdzie m = długość słowa
+        Złożoność pamięciowa: O(1)
+        """
+        # TODO: Przejdź po literach słowa — jeśli brakuje litery w węźle, zwróć False.
+        #       Po dojściu do końca zwróć wartość flagi czy_koniec ostatniego węzła.
+        pass
+
+    # ============================================================
+    # FUNKCJA 3 – Autouzupełnianie (podpowiedzi)
+    # ============================================================
+    def podpowiedzi(self, prefiks: str) -> list[str]:
+        """
+        Zwraca listę wszystkich słów ze słownika, które zaczynają się od `prefiks`.
+        Jeśli żadne słowo nie pasuje, zwraca pustą listę.
+
+        Intuicja: najpierw schodzimy do węzła odpowiadającego ostatniej literze
+        prefiksu (tak jak w szukaj). Jeśli węzeł istnieje, rekurencyjnie
+        przechodzimy po wszystkich gałęziach poddrzewa, zbierając kompletne słowa.
+
+        Złożoność czasowa:  O(m + k), gdzie m = długość prefiksu, k = liczba wyników
+        Złożoność pamięciowa: O(k) – lista wynikowa
+
+        Przykład:
+            słownik: ["laptop", "lampa", "lato", "monitor"]
+            podpowiedzi("la") → ["laptop", "lampa", "lato"]
+            podpowiedzi("mon") → ["monitor"]
+            podpowiedzi("xyz") → []
+        """
+        # TODO: Zejdź do węzła odpowiadającego ostatniej literze prefiksu.
+        #       Jeśli którejś litery brakuje po drodze — zwróć pustą listę.
+        #       Następnie wywołaj pomocniczą funkcję _zbierz_slowa(), która
+        #       rekurencyjnie zbierze wszystkie słowa z poddrzewa.
+        #       Zwróć posortowaną listę wyników.
+        pass
+
+    def _zbierz_slowa(self, node: TrieNode, prefiks: str, wyniki: list[str]) -> None:
+        """
+        Pomocnicza metoda do podpowiedzi() — rekurencyjnie odwiedza wszystkie
+        węzły w poddrzewie i zbiera kompletne słowa do listy `wyniki`.
+
+        Nie musisz jej wywoływać bezpośrednio — używa jej podpowiedzi().
+
+        Złożoność: O(n), gdzie n = liczba węzłów w poddrzewie
+        """
+        # TODO: Jeśli bieżący węzeł jest końcem słowa, dodaj `prefiks` do `wyniki`.
+        #       Następnie dla każdej litery w node.dzieci wywołaj rekurencyjnie
+        #       _zbierz_slowa() z rozszerzonym prefiksem (prefiks + litera).
+        pass
+
 
 # =============================================================================
-# Demonstracja działania
+# FUNKCJE POMOCNICZE (dostarczone – nie musisz ich zmieniać)
+# =============================================================================
+def _separator(tytul: str) -> None:
+    print(f"\n{'=' * 50}")
+    print(f"  {tytul}")
+    print('=' * 50)
+
+
+# =============================================================================
+# Demonstracja działania – uruchom plik, aby sprawdzić swoje rozwiązanie
 # =============================================================================
 if __name__ == "__main__":
-    slownik = Trie()
-    produkty = ["laptop", "lampa", "lato", "monitor", "myszka"]
+    print("=== System Autouzupełniania – Trie ===\n")
 
+    slownik = Trie()
+    produkty = [
+        "laptop", "lampa", "lato", "lawa",
+        "monitor", "mysz", "myszka",
+        "kabel", "kamera", "karta",
+    ]
+
+    _separator("Budowanie słownika Trie")
     for p in produkty:
         slownik.wstaw(p)
+    print(f"  Wstawiono {len(produkty)} produktów do słownika.")
 
-    print("=== System Autouzupełniania Trie ===")
-    print(f"Czy jest 'laptop'? {slownik.szukaj('laptop')}")  # Powinno być True
-    print(f"Czy jest 'lampa'?  {slownik.szukaj('lampa')}")   # Powinno być True
-    print(f"Czy jest 'rower'?  {slownik.szukaj('rower')}")   # Powinno być False
+    # --- Test 1: Wyszukiwanie pełnych słów ---
+    _separator("Test 1 – Wyszukiwanie słów (szukaj)")
+    testy_szukaj = [
+        ("laptop",  True),
+        ("lampa",   True),
+        ("la",      False),   # prefiks, nie pełne słowo
+        ("rower",   False),
+        ("myszka",  True),
+        ("myszkaa", False),   # błąd w słowie
+    ]
+    for slowo, oczekiwane in testy_szukaj:
+        wynik = slownik.szukaj(slowo)
+        status = "OK" if wynik == oczekiwane else "BŁĄD"
+        print(f"  [{status}] szukaj('{slowo}') = {wynik}  (oczekiwano: {oczekiwane})")
+
+    # --- Test 2: Autouzupełnianie ---
+    _separator("Test 2 – Autouzupełnianie (podpowiedzi)")
+    testy_auto = [
+        ("la",   ["lampa", "laptop", "lato", "lawa"]),
+        ("mo",   ["monitor"]),
+        ("my",   ["mysz", "myszka"]),
+        ("ka",   ["kabel", "kamera", "karta"]),
+        ("xyz",  []),
+    ]
+    for prefiks, oczekiwane in testy_auto:
+        wyniki = slownik.podpowiedzi(prefiks)
+        status = "OK" if sorted(wyniki) == sorted(oczekiwane) else "BŁĄD"
+        print(f"  [{status}] podpowiedzi('{prefiks}') = {wyniki}")
+
+    # --- Test 3: Pusty prefiks — wszystkie słowa ---
+    _separator("Test 3 – Pusty prefiks (wszystkie słowa)")
+    wszystkie = slownik.podpowiedzi("")
+    print(f"  Liczba słów w słowniku: {len(wszystkie)}")
+    print(f"  Słowa: {sorted(wszystkie)}")
